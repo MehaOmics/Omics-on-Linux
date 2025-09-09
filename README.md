@@ -1,6 +1,6 @@
 # Useful-omics-commands
-This repository contains commonly used command-line operations in omics workflows.  
-The commands are intended for use on Linux or HPC environments and can be adapted for different datasets.
+- This repository contains commonly used command-line operations in omics workflows
+- The commands are intended for use on Linux or HPC environments and can be adapted for different datasets
 
 ## Tools Covered
 - grep – search for patterns in text files  
