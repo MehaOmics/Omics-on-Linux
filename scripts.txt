@@ -1,0 +1,57 @@
+## grep - Search for patterns
+- To extract FASTA headers from a transcriptome assembly 
+grep ">" Trinity.fasta > Trinity_headers.txt
+
+- To count FASTA seqeunces in a FASTA file
+grep -c ">" Trinity.fasta
+
+
+## sed - Editing
+## replace '@' to '>'
+sed -e 's/@/\>/g' Trinity.fasta > Trinity_replace.fasta
+
+
+## cat - merging files
+## merge multiple FASTA files
+cat *.fasta > Trinity_combined.fasta
+
+
+## awk - for filtering BLAST results (output format 6) for percentage identiy >70%
+awk '$3 > 70' blast_results.outfmt6 > blast_filtered.outfmt6
+
+## sort - to remove duplicates
+sort sample.txt | uniq > sample_unique.txt
+
+
+## Extracting desired FASTA Sequences from an assembled transcriptome
+## Extracting specific sequences from a transcriptome assembly is commonly done to retrieve differentially expressed genes or any gene of interest. There are two common approaches:
+
+##Method 1: Using a Flat File
+
+## Flatten the FASTA file (convert multi-line sequences to single-line) (output from Trinity has TRINITY as header)
+tr "\n" "\t" < Trinity.fasta | sed 's/>TRINITY/\n>TRINITY/g' > Trinity.flat
+
+## Extract sequences for a list of query IDs
+for x in $(cat query_ids.txt); do
+  grep $x Trinity.flat | sed 's/\t/\n/g' >> Trinity.flt.fasta
+done
+
+## Optional: keep only the first two fields in the final FASTA
+cut -f 1-2 -d ' ' Trinity.flt.fasta > Trinity.fasta
+
+## Method 2: Using seqtk (easy to use)
+seqtk subseq Trinity.fasta query_ids.txt > selected_sequences.fasta
+
+
+## Samtools is a widely used toolkit for handling **SAM/BAM** files generated after read alignment in RNA-seq or genome analysis.
+
+## SAM to BAM
+samtools view -b -S Sample.sam > Sample.bam
+
+## Sort BAM file by genomic coordinates:
+samtools sort Sample.bam Sample_SORTED.bam
+
+## Get alignment statistics
+samtools flagstat aln.sorted.bam
+
+
