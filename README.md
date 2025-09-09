@@ -1,4 +1,4 @@
-# Useful-omics-commands
+# Useful Linux commands
 - This repository contains commonly used command-line operations in omics workflows
 - The commands are intended for use on Linux or HPC environments and can be adapted for different datasets
 
